@@ -1,42 +1,46 @@
 package ru.yandex.practicum;
 
-import javax.imageio.IIOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-/*
-этот класс содержит в себе всю рутину по работе с файлами словарей и с кодировками
-    ему нужны методы по загрузке списка слов из файла по имени файла
-    на выходе должен быть класс WordleDictionary
-*/
 public class WordleDictionaryLoader {
-    private static final String connectDictionary = "C:\\Users\\user\\Desktop\\код\\java-wordle4j";
+    private static final String DICTIONARY_FILE = "words_ru.txt";
+    private final PrintWriter log;
 
-    try(BufferedReader reader = new BufferedReader(
-            (new FileReader("words_ru.txt", StandardCharsets.UTF_8))) {
-        while(reader.ready()) {
-            String line = reader.readLine();
-            Path filteredDictionary = Paths.get(connectDictionary, "filteredDictionaryFile.txt")
-            if(line.length() == 5) {
-                try (Writer fileWriter = new FileWriter("filteredDictionaryFile", true)){
-                    fileWriter.write(line + "\n");
-                } catch (IIOException e) {
-                    e.printStackTrace();
-                } finally {
-                    fileWriter.close();
-                }
-            } else {
-                continue;
-            }
-        }
-    } catch {
-
+    public WordleDictionaryLoader(PrintWriter log) {
+        this.log = log;
     }
 
+    public WordleDictionary dictionaryFilter() throws IOException, EmptyDictionaryException  {
+    List<String> wordsFiltered = new ArrayList<>();
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(DICTIONARY_FILE, StandardCharsets.UTF_8))) {
+        String line;
+        while((line = reader.readLine()) != null) {
+            if(line.length() == 5) {
+                String lineLowReplaced = normalize(line);
+                wordsFiltered.add(lineLowReplaced);
+            }
+        }
+    }
+        if (wordsFiltered.isEmpty()){
+            throw new EmptyDictionaryException("В словаре нет слов");
+        }
+        if (log != null) {
+            log.println("Загружено слов: " + wordsFiltered.size());
+        }
+        return new WordleDictionary(wordsFiltered, log);
+    }
+
+    private String normalize(String word) {
+        return word.toLowerCase().replace('ё', 'е').trim();
+    }
+}
+
+class EmptyDictionaryException extends Exception  {
+    public EmptyDictionaryException(String message) {
+        super(message);
+    }
 }
