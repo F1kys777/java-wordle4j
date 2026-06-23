@@ -60,7 +60,7 @@ public class Wordle {
                                 }
                             }
                         }
-                        if (newGame.isUserAnswerRight){
+                        if (newGame.isUserAnswerRight) {
                             System.out.println("Игра окончена! Вы победили!");
                         } else {
                             System.out.println("Игра окончена! К сожалению, вы проиграли.");
