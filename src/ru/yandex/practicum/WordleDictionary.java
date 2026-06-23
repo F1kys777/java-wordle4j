@@ -45,8 +45,8 @@ public class WordleDictionary {
             throw new RuntimeException("Слово не загадано.");
         }
 
-        for(int i = 0; i < 5; i++) {
-            if(randomWord.charAt(i) == answer.charAt(i)) {
+        for (int i = 0; i < 5; i++) {
+            if (randomWord.charAt(i) == answer.charAt(i)) {
                 rightPlace[i] = true;
                 charAnswer[i] = '+';
             }
