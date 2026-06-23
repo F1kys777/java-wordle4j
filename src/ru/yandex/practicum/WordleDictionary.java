@@ -8,6 +8,7 @@ public class WordleDictionary {
     private List<String> words;
     private String randomWord;
     private final PrintWriter log;
+    private final Random random = new Random();
 
     public WordleDictionary(List<String> words, PrintWriter log) {
         this.words = words;
@@ -19,12 +20,11 @@ public class WordleDictionary {
     }
 
     public String getRandomWord() throws RuntimeException {
-        Random random = new Random();
         if (words == null || words.isEmpty()) {
             throw new RuntimeException("Словарь пуст.");
         }
-        int x = random.nextInt(words.size());
-        randomWord = words.get(x);
+        int randomIndex = random.nextInt(words.size());
+        randomWord = words.get(randomIndex);
         if (randomWord == null) {
             throw new RuntimeException("Ошибка: слово не было загадано.");
         }
@@ -45,7 +45,7 @@ public class WordleDictionary {
             throw new RuntimeException("Слово не загадано.");
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) { //Не смог придумать как объединить два цикла, чтобы не сломать подсказки
             if (randomWord.charAt(i) == answer.charAt(i)) {
                 rightPlace[i] = true;
                 charAnswer[i] = '+';

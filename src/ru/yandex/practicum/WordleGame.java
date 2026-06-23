@@ -43,10 +43,10 @@ public class WordleGame {
     public String makeStep(String userAnswer) throws InvalidWordLength, WordNotFoundInDictionary {
         userAnswer = normalizationAnswer(userAnswer);
         if (userAnswer.length() != 5) {
-            throw new InvalidWordLength();
+            throw new InvalidWordLength("Слово должно состоять из 5 букв.");
         }
         if (!dictionary.contains(userAnswer)) {
-            throw new WordNotFoundInDictionary(userAnswer);
+            throw new WordNotFoundInDictionary("Слово '" + userAnswer + "' не найдено в словаре.");
         }
         guessHistory.add(userAnswer);
         String check = dictionary.charChecker(userAnswer);
@@ -55,7 +55,7 @@ public class WordleGame {
         }
         feedbackHistory.add(check);
         checkAnswer(check, userAnswer);
-        attempt = attempt + 1;
+        attempt ++;
         isUserAnswerRight(check);
 
         if (log != null) {
@@ -75,9 +75,7 @@ public class WordleGame {
     }
 
     public boolean isGameEnd() {
-        if (steps == attempt) {
-            return true;
-        } else if (isUserAnswerRight) {
+        if (steps == attempt || isUserAnswerRight) {
             return true;
         }
         return false;

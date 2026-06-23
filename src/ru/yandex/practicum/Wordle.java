@@ -77,7 +77,7 @@ public class Wordle {
             }
 
         } catch (IOException e) {
-            System.err.println("Не удалось создать лог-файл: " + e.getMessage());
+            System.err.println("Не удалось создать лог-файл: " + e.getMessage()); //если логгер не создается, то в него и не получится добавить текст
         }
     }
 
