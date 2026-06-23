@@ -12,12 +12,11 @@ public class Wordle {
                 new OutputStreamWriter(new FileOutputStream("game.log"), StandardCharsets.UTF_8))) {
 
             Scanner scanner = new Scanner(System.in);
-
             WordleDictionaryLoader loader = new WordleDictionaryLoader(logger);
             WordleDictionary dictionary;
-            try {
+            try{
                 dictionary = loader.dictionaryFilter();
-                if (dictionary == null) {
+                if(dictionary == null) {
                     throw new RuntimeException("Словарь не загружен.");
                 }
                 logger.println("Словарь успешно загружен, слов: " + dictionary.getWords().size());
