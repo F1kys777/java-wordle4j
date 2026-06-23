@@ -9,7 +9,6 @@ public class WordleGame {
     private int steps = 6;
     private int attempt = 0;
     private WordleDictionary dictionary;
-    Scanner scan;
     Map<Integer, Character> rightPosition = new HashMap<>();
     Set<Character> noExist = new HashSet<>();
     HashMap<Character, Integer> existChar = new HashMap<>();
@@ -19,9 +18,8 @@ public class WordleGame {
     private final PrintWriter log;
     private final Random random = new Random();
 
-    public WordleGame(WordleDictionary dictionary, Scanner scanner, PrintWriter log) {
+    public WordleGame(WordleDictionary dictionary, PrintWriter log) {
         this.dictionary = dictionary;
-        this.scan = scanner;
         this.log = log;
     }
 
@@ -35,15 +33,21 @@ public class WordleGame {
 
     public boolean isValidWord(String word) {
         word = normalizationAnswer(word);
-        if (word.length() != 5 || !dictionary.getWords().contains(word)) {
+        if (word.length() != 5 || !dictionary.contains(word)) {
             log.println("Ошибка: Некорректное слово '" + word + "'");
             return false;
         }
         return true;
     }
 
-    public String makeStep(String userAnswer) {
+    public String makeStep(String userAnswer) throws InvalidWordLength, WordNotFoundInDictionary {
         userAnswer = normalizationAnswer(userAnswer);
+        if (userAnswer.length() != 5) {
+            throw new InvalidWordLength();
+        }
+        if (!dictionary.contains(userAnswer)) {
+            throw new WordNotFoundInDictionary(userAnswer);
+        }
         guessHistory.add(userAnswer);
         String check = dictionary.charChecker(userAnswer);
         if (check == null || check.length() != 5) {

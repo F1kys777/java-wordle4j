@@ -58,12 +58,12 @@ public class WordleDictionary {
             for (int j = 0; j < 5; j++) {
                 if (!rightPlace[j] && answer.charAt(i) == randomWord.charAt(j)) {
                     charAnswer[i] = '^';
-                    rightPlace[j] = true; //ПРОВЕРИТЬ ВСЮ ЛОГИКУ ПРОВЕРКИ, КАК БУДТО ОНО НЕ НУЖНО ВООБЩЕ ТУТ,УБРАТЬ МБ ВООБЩЕ
+                    rightPlace[j] = true;
                     found = true;
                     break;
                 }
             }
-            if (!found) { //ПРОВЕРИТЬ ВСЮ ЛОГИКУ ПРОВЕРКИ, ДОБАВИТЬ ЛОГИКУ ПРОВЕРКИ ЧТО НЕ НАЙДЕНО И НЕ ВЕРНОЕ МЕСТО
+            if (!found) {
                 charAnswer[i] = '-';
             }
         }
@@ -76,5 +76,8 @@ public class WordleDictionary {
 
         return result;
     }
-}
 
+    public boolean contains(String word) {
+        return words.contains(word);
+    }
+}

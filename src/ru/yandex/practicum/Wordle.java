@@ -32,7 +32,7 @@ public class Wordle {
                 System.out.print("Выберите действие: ");
                 int choice;
                 try {
-                    choice = Integer.parseInt(scanner.nextLine()); //ПРОВЕРИТЬ РАБОТУ С НЕКСТ ИНТОМ
+                    choice = Integer.parseInt(scanner.nextLine());
                 } catch (NumberFormatException e) {
                     System.out.println("Введите число!");
                     continue;
@@ -41,7 +41,7 @@ public class Wordle {
                 switch (choice) {
                     case 1:
                         System.out.println("Запускаем игру...");
-                        WordleGame newGame = new WordleGame(dictionary, scanner, logger);
+                        WordleGame newGame = new WordleGame(dictionary, logger);
                         newGame.gameStarted();
                         System.out.println("Слово загадано. Введите слово или нажмите Enter для получения подсказки:");
                         while (!newGame.isGameEnd()) {
@@ -52,8 +52,13 @@ public class Wordle {
                             } else if (!newGame.isValidWord(userAnswer)) {
                                 System.out.println("Некорректное слово. Попробуйте снова.");
                             } else {
-                                String check = newGame.makeStep(userAnswer);
-                                System.out.println(check);
+                                try {
+                                    String check = newGame.makeStep(userAnswer);
+                                    System.out.println(check);
+                                } catch (InvalidWordLength | WordNotFoundInDictionary e) {
+                                    System.out.println(e.getMessage());
+                                    logger.println("Игровая ошибка: " + e.getMessage());
+                                }
                             }
                         }
                         if(newGame.isUserAnswerRight){
