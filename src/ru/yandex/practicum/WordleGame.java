@@ -64,6 +64,7 @@ public class WordleGame {
 
         return check;
     }
+
     private boolean isUserAnswerRight(String check) {
         if (check.equals("+++++")) {
             isUserAnswerRight = true;
@@ -74,9 +75,9 @@ public class WordleGame {
     }
 
     public boolean isGameEnd() {
-        if(steps == attempt) {
+        if (steps == attempt) {
             return true;
-        } else if(isUserAnswerRight) {
+        } else if (isUserAnswerRight) {
             return true;
         }
         return false;
