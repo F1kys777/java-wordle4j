@@ -55,7 +55,7 @@ public class WordleGame {
         }
         feedbackHistory.add(check);
         checkAnswer(check, userAnswer);
-        attempt ++;
+        attempt++;
         isUserAnswerRight(check);
 
         if (log != null) {
