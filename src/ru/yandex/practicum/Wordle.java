@@ -14,9 +14,9 @@ public class Wordle {
             Scanner scanner = new Scanner(System.in);
             WordleDictionaryLoader loader = new WordleDictionaryLoader(logger);
             WordleDictionary dictionary;
-            try{
+            try {
                 dictionary = loader.dictionaryFilter();
-                if(dictionary == null) {
+                if (dictionary == null) {
                     throw new RuntimeException("Словарь не загружен.");
                 }
                 logger.println("Словарь успешно загружен, слов: " + dictionary.getWords().size());
@@ -60,7 +60,7 @@ public class Wordle {
                                 }
                             }
                         }
-                        if(newGame.isUserAnswerRight){
+                        if (newGame.isUserAnswerRight){
                             System.out.println("Игра окончена! Вы победили!");
                         } else {
                             System.out.println("Игра окончена! К сожалению, вы проиграли.");
