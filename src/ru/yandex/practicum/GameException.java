@@ -18,3 +18,8 @@ class WordNotFoundInDictionary extends GameException {
     }
 }
 
+class EmptyDictionaryException extends Exception  {
+    public EmptyDictionaryException(String message) {
+        super(message);
+    }
+}
